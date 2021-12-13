@@ -1,0 +1,33 @@
+---
+- name: simple playbook to install docker on nodes
+  hosts: all
+  tasks:
+   - name: installing dependencies required for docker
+     yum:
+      name: "{{ item }}"
+      state: present
+      update_cache: yes
+     loop:
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+    
+   - name: Configuring docker-ce repo
+     get_url:
+      url: https://download.docker.com/linux/centos/docker-ce.repo
+      dest: /etc/yum.repos.d/docker-ce.repo
+      mode: 0644   
+
+   - name: installing docker
+     yum: 
+      name: "{{ item }}"
+      state: latest
+      update_cache: yes
+     loop:
+      - docker-ce
+       
+   - name: starting docker service
+     service:
+      name: docker
+      state: started
+      enabled: yes
