@@ -1,0 +1,12 @@
+---
+- name: simple playbook to learn "template" module
+  hosts: all
+  vars: 
+   var1: 'controller.example.com'
+   var2: 'node1.example.com'
+  tasks: 
+   - name: Using template module
+     template:
+      src: ./data.j2
+      dest: ~/Desktop/data.txt
+
