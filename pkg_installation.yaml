@@ -1,0 +1,35 @@
+---
+- name: simple playbook to install pkg on different OS
+  hosts: all
+  become: true
+  tasks: 
+   - name: installing "apache-webserver" in Ubuntu 
+     apt:
+      name: apache2
+      state: latest
+      update_cache: yes
+     when: ansible_facts['distribution'] == "Ubuntu"
+     
+   - name: installing "apache-webserver" in Debian
+     apt:
+      name: apache2
+      state: latest
+      update_cache: yes
+     when: ansible_facts['distribution'] == "Debian"
+
+   - name: installing "apache-webserver" in CentOS
+     yum:
+      name: httpd
+      state: latest
+      update_cache: yes
+     when: ansible_facts['distribution'] == "CentOS"
+
+   - name: installing "apache-webserver" in RedHat
+     yum:
+      name: httpd
+      state: latest
+      update_cache: yes
+     when: ansible_facts['distribution'] == "RedHat"
+  
+  
+ 
