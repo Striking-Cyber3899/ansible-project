@@ -1,0 +1,11 @@
+---
+- name: simple playbook to create a user on all managed hosts
+  hosts: all
+  tasks:
+   - name: creating a user named john smith.
+     user:
+      name: john
+      comment: john smith
+      shell: /bin/bash  
+      password: "{{ 'password' | password_hash('sha512') }}"
+      state: present
